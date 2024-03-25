@@ -1,6 +1,8 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'RestApiExample.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +35,7 @@ class MyAppState extends ChangeNotifier {
 
   void getNext() {
     history.insert(0, current);
-    var animatedList = historyListKey?.currentState as AnimatedListState?; 
+    var animatedList = historyListKey?.currentState as AnimatedListState?;
     animatedList?.insertItem(0);
     current = WordPair.random();
     notifyListeners();
@@ -72,9 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = GeneratorPage(); 
+        page = GeneratorPage();
       case 1:
-        page = FavoritesPage(); 
+        page = FavoritesPage();
+      case 2:
+        page = RestApiExample();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -109,6 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: 'Favorites',
                       ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.abc_sharp),
+                        label: 'RestApi',
+                      ),
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
@@ -134,6 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.abc_sharp),
+                        label: Text('RestApi'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
@@ -183,11 +195,9 @@ class GeneratorPage extends StatelessWidget {
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-
- 
-  print('Test future.. Sync operation, example...'); 
-  print('Test future.. ${  syncFunctionCreateOrderMessage()}');
-  print('Test future.. SYNC FUNCTION DONE..'); 
+                  print('Test future.. Sync operation, example...');
+                  print('Test future.. ${syncFunctionCreateOrderMessage()}');
+                  print('Test future.. SYNC FUNCTION DONE..');
                   appState.toggleFavorite();
                 },
                 icon: Icon(icon),
@@ -195,13 +205,19 @@ class GeneratorPage extends StatelessWidget {
               ),
               SizedBox(width: 10),
               ElevatedButton(
-                onPressed: ()  async {
+                onPressed: () async {
                   // An async function runs synchronously until the first await keyword.
                   // This means that within an async function body, all synchronous code before the first await keyword executes immediately.
-  print('Test future..ASYNC operation, example...');
-  print('Test future.. ${ await asyncFunctionCreateOrderMessage()}...');
-  print('Test future.. ASYNC FUNCTION DONE..'); 
-                  appState.getNext();
+
+                  try {
+                    appState.getNext();
+                    print('Test future..ASYNC operation, example...');
+                    print(
+                        'Test future.. ${await asyncFunctionCreateOrderMessage()}...');
+                    print('Test future.. ASYNC FUNCTION DONE..');
+                  } catch (err) {
+                    err.toString();
+                  }
                 },
                 child: Text('Next'),
               ),
@@ -212,12 +228,12 @@ class GeneratorPage extends StatelessWidget {
       ),
     );
   }
-} 
+}
 
 Future<String> asyncFunctionCreateOrderMessage() async {
   var order = await fetchUserOrder();
   return 'YOUR ASYNC order is: $order';
-} 
+}
 
 String syncFunctionCreateOrderMessage() {
   var order = fetchUserOrder();
@@ -231,7 +247,6 @@ Future<String> fetchUserOrder() =>
       const Duration(seconds: 2),
       () => 'Large Latte',
     );
- 
 
 class BigCard extends StatelessWidget {
   const BigCard({
