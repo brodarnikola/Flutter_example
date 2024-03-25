@@ -33,7 +33,7 @@ class MyAppState extends ChangeNotifier {
 
   void getNext() {
     history.insert(0, current);
-    var animatedList = historyListKey?.currentState as AnimatedListState?;
+    var animatedList = historyListKey?.currentState as AnimatedListState?; 
     animatedList?.insertItem(0);
     current = WordPair.random();
     notifyListeners();
@@ -183,6 +183,11 @@ class GeneratorPage extends StatelessWidget {
             children: [
               ElevatedButton.icon(
                 onPressed: () {
+
+ 
+  print('Test future.. Sync operation, example...'); 
+  print('Test future.. ${  syncFunctionCreateOrderMessage()}');
+  print('Test future.. SYNC FUNCTION DONE..'); 
                   appState.toggleFavorite();
                 },
                 icon: Icon(icon),
@@ -190,7 +195,12 @@ class GeneratorPage extends StatelessWidget {
               ),
               SizedBox(width: 10),
               ElevatedButton(
-                onPressed: () {
+                onPressed: ()  async {
+                  // An async function runs synchronously until the first await keyword.
+                  // This means that within an async function body, all synchronous code before the first await keyword executes immediately.
+  print('Test future..ASYNC operation, example...');
+  print('Test future.. ${ await asyncFunctionCreateOrderMessage()}...');
+  print('Test future.. ASYNC FUNCTION DONE..'); 
                   appState.getNext();
                 },
                 child: Text('Next'),
@@ -202,7 +212,26 @@ class GeneratorPage extends StatelessWidget {
       ),
     );
   }
+} 
+
+Future<String> asyncFunctionCreateOrderMessage() async {
+  var order = await fetchUserOrder();
+  return 'YOUR ASYNC order is: $order';
+} 
+
+String syncFunctionCreateOrderMessage() {
+  var order = fetchUserOrder();
+  return 'YOUR SYNC order is: $order';
 }
+
+Future<String> fetchUserOrder() =>
+    // Imagine that this function is
+    // more complex and slow.
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => 'Large Latte',
+    );
+ 
 
 class BigCard extends StatelessWidget {
   const BigCard({
