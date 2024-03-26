@@ -1,11 +1,26 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:flutter_example_1/local_storage/hive_example/hive_functions.dart';
+import 'package:flutter_example_1/local_storage/hive_example/hive_screen.dart';
+import 'package:hive_flutter/hive_flutter.dart'; 
 import 'package:provider/provider.dart';
 
 import 'RestApiExample.dart';
 import 'country_data/country_page.dart';
 
-void main() {
+void main() async {
+
+
+  // It is used so that void main function can 
+  // be intiated after successfully intialization of data 
+  WidgetsFlutterBinding.ensureInitialized(); 
+    
+  // To intialise the hive database 
+  await Hive.initFlutter(); 
+  
+  // To open the user hive box 
+  await Hive.openBox(userHiveBox); 
+
   runApp(const MyApp());
 }
 
@@ -81,7 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2:
         page = RestApiExample();
       case 3:
-        page = CountryPage(); // example of rest api call
+        page = CountryPage(); // example of rest api call 
+      case 4:
+        page = HiveScreen(); // example of local storage with hive
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -124,6 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.countertops),
                         label: 'Countries',
+                      ), 
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.storage),
+                        label: 'HiveStorage',
                       ),
                     ],
                     currentIndex: selectedIndex,
@@ -158,6 +179,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.countertops),
                         label: Text('Countries'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.storage),
+                        label: Text('HiveStorage'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
