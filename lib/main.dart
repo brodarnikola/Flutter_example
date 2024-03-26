@@ -1,8 +1,9 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 
 import 'RestApiExample.dart';
+import 'country_data/country_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,6 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FavoritesPage();
       case 2:
         page = RestApiExample();
+      case 3:
+        page = CountryPage(); // example of rest api call
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -104,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(child: mainArea),
                 SafeArea(
                   child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
                     items: [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home),
@@ -116,6 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.abc_sharp),
                         label: 'RestApi',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.countertops),
+                        label: 'Countries',
                       ),
                     ],
                     currentIndex: selectedIndex,
@@ -146,6 +154,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.abc_sharp),
                         label: Text('RestApi'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.countertops),
+                        label: Text('Countries'),
                       ),
                     ],
                     selectedIndex: selectedIndex,

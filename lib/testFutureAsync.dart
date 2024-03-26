@@ -1,6 +1,6 @@
 Future<String> reportUserRole() async {
   var userRole = await fetchRole();
-  return 'User role: $userRole'; 
+  return 'User role: $userRole';
 }
 
 // Part 2
@@ -9,14 +9,14 @@ Future<String> reportUserRole() async {
 // to return the number of times that the user has logged in.
 Future<int> reportLogins() async {
   var reportNumberOfLogin = await fetchLoginAmount();
-  return  reportNumberOfLogin;
+  return reportNumberOfLogin;
 }
 
 // The following functions those provided to you to simulate
 // asynchronous operations that could take a while.
 
-Future<String> fetchRole()  =>  Future.delayed(_halfSecond, () => _role);
-Future<int> fetchLoginAmount()  =>  Future.delayed(_halfSecond, () => _logins);
+Future<String> fetchRole() => Future.delayed(_halfSecond, () => _role);
+Future<int> fetchLoginAmount() => Future.delayed(_halfSecond, () => _logins);
 
 // The following code is used to test and provide feedback on your solution.
 // There is no need to read or modify it.
@@ -27,8 +27,7 @@ void main() async {
   const passed = 'PASSED';
   const testFailedMessage = 'Test failed for the function:';
   const typoMessage = 'Test failed! Check for typos in your return value';
-  try { 
-
+  try {
     messages
       ..add(_makeReadable(
           testLabel: 'Part 1',

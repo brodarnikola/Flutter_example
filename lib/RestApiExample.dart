@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_example_1/main.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 Future<Album> fetchAlbum() async {
   final response = await http
