@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_example_1/local_storage/hive_example/hive_screen.dart';
-import 'package:flutter_example_1/main.dart'; 
+import 'package:flutter_example_1/main.dart';
 import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
@@ -88,11 +88,19 @@ class _RestApiExample extends State<RestApiExample> {
                     // To edit the data stored
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HiveScreen()),
-                          );
+                          if (index == 0) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HiveScreen()),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FavoritesPage()),
+                            );
+                          }
                           // showForm(userData["key"]);
                         },
                         icon: const Icon(Icons.edit_note_rounded)),
