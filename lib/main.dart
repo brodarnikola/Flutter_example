@@ -94,11 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
       case 2:
-        page = RestApiExample();
-      case 3:
         page = CountryPage(); // example of rest api call 
-      case 4:
+      case 3:
         page = HiveScreen(); // example of local storage with hive
+      case 4:
+        page = RestApiExample();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -135,16 +135,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'Favorites',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.abc_sharp),
-                        label: 'RestApi',
+                        icon: Icon(Icons.storage),
+                        label: 'HiveStorage',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.countertops),
                         label: 'Countries',
                       ), 
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.storage),
-                        label: 'HiveStorage',
+                      BottomNavigationBarItem( 
+                        icon: Icon(Icons.abc_sharp),
+                        label: 'RestApi',
                       ),
                     ],
                     currentIndex: selectedIndex,
@@ -172,17 +172,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
                       ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.abc_sharp),
-                        label: Text('RestApi'),
+                      NavigationRailDestination( 
+                        icon: Icon(Icons.storage),
+                        label: Text('HiveStorage'),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.countertops),
                         label: Text('Countries'),
                       ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.storage),
-                        label: Text('HiveStorage'),
+                      NavigationRailDestination(  
+                        icon: Icon(Icons.abc_sharp),
+                        label: Text('RestApi'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
@@ -245,7 +245,6 @@ class GeneratorPage extends StatelessWidget {
                 onPressed: () async {
                   // An async function runs synchronously until the first await keyword.
                   // This means that within an async function body, all synchronous code before the first await keyword executes immediately.
-
                   try {
                     appState.getNext();
                     print('Test future..ASYNC operation, example...');
