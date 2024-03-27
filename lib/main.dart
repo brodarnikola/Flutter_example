@@ -135,12 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'Favorites',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.storage),
-                        label: 'HiveStorage',
-                      ),
-                      BottomNavigationBarItem(
                         icon: Icon(Icons.countertops),
                         label: 'Countries',
+                      ),
+                      BottomNavigationBarItem( 
+                        icon: Icon(Icons.storage),
+                        label: 'HiveStorage',
                       ), 
                       BottomNavigationBarItem( 
                         icon: Icon(Icons.abc_sharp),
@@ -173,12 +173,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: Text('Favorites'),
                       ),
                       NavigationRailDestination( 
-                        icon: Icon(Icons.storage),
-                        label: Text('HiveStorage'),
-                      ),
-                      NavigationRailDestination(
                         icon: Icon(Icons.countertops),
                         label: Text('Countries'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.storage),
+                        label: Text('HiveStorage'),
                       ),
                       NavigationRailDestination(  
                         icon: Icon(Icons.abc_sharp),
