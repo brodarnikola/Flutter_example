@@ -26,12 +26,21 @@ Future<Album> fetchAlbum() async {
 
 Future<int> delete() {
   // Imagine that this function is more complex and slow.
-  return Future.delayed(const Duration(seconds: 2), () => 1);
+  final intResult = Future.delayed(const Duration(seconds: 2), () =>  
+    1
+  );
+  print("ASYNC OPERATION.. delete is done");
+  return intResult;
 }
 
-Future<String> copy() => Future.delayed(const Duration(seconds: 2), () => "1");
+// example of single line function
+Future<String> copy() {
+ final stringResult = Future.delayed(const Duration(seconds: 1), () => "1"); 
+  print("ASYNC OPERATION.. copy is done");
+  return stringResult;
+} 
 Future<bool> errorResult() =>
-    Future.delayed(const Duration(seconds: 2), () => true);
+    Future.delayed(const Duration(seconds: 3), () => true);
 
 void exampleMultipleAsyncCalls() async {
   try {
@@ -42,11 +51,18 @@ void exampleMultipleAsyncCalls() async {
     var deleteInt = result.$1;
     var copyString = result.$2;
     var errorBool = result.$3;
+    print("ASYNC OPERATION.. delete is: $deleteInt");
+    print("ASYNC OPERATION.. copyString is: $copyString");
+    print("ASYNC OPERATION.. errorBool is: $errorBool");
   } on ParallelWaitError<(int?, String?, bool?),
       (AsyncError?, AsyncError?, AsyncError?)> catch (e) {
         print(e.values.$1);
         print(e.errors.$2);
         print(e.errors.$3);
+
+    print("delete is: ${e.values.$1}");
+    print("copyString is: ${e.errors.$2}");
+    print("errorBool is: ${e.errors.$3}");
     // ...
   }
 }
@@ -90,14 +106,14 @@ class _RestApiExample extends State<RestApiExample> {
   late Future<Album> futureAlbum;
   List<String> myHiveData = [
     "Local storage",
-    "Firebase",
     "Google maps",
-    "Local storage",
-    "Firebase",
-    "Google maps",
-    "Local storage",
-    "Firebase",
-    "Google maps"
+    "New screen 1",
+    "New screen 2",
+    "New screen 3",
+    "New screen 4",
+    "New screen 5",
+    "New screen 6",
+    "New screen 7",
   ];
 
   @override
