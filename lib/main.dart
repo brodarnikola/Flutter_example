@@ -2,24 +2,22 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_example_1/local_storage/hive_example/hive_functions.dart';
 import 'package:flutter_example_1/local_storage/hive_example/hive_screen.dart';
-import 'package:hive_flutter/hive_flutter.dart'; 
+import 'package:flutter_example_1/rest_api_example.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'RestApiExample.dart';
 import 'country_data/country_page.dart';
 
 void main() async {
+  // It is used so that void main function can
+  // be intiated after successfully intialization of data
+  WidgetsFlutterBinding.ensureInitialized();
 
+  // To intialise the hive database
+  await Hive.initFlutter();
 
-  // It is used so that void main function can 
-  // be intiated after successfully intialization of data 
-  WidgetsFlutterBinding.ensureInitialized(); 
-    
-  // To intialise the hive database 
-  await Hive.initFlutter(); 
-  
-  // To open the user hive box 
-  await Hive.openBox(userHiveBox); 
+  // To open the user hive box
+  await Hive.openBox(userHiveBox);
 
   runApp(const MyApp());
 }
@@ -94,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
       case 2:
-        page = CountryPage(); // example of rest api call 
+        page = CountryPage(); // example of rest api call
       case 3:
         page = HiveScreen(); // example of local storage with hive
       case 4:
@@ -138,11 +136,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.countertops),
                         label: 'Countries',
                       ),
-                      BottomNavigationBarItem( 
+                      BottomNavigationBarItem(
                         icon: Icon(Icons.storage),
                         label: 'HiveStorage',
-                      ), 
-                      BottomNavigationBarItem( 
+                      ),
+                      BottomNavigationBarItem(
                         icon: Icon(Icons.abc_sharp),
                         label: 'RestApi',
                       ),
@@ -172,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
                       ),
-                      NavigationRailDestination( 
+                      NavigationRailDestination(
                         icon: Icon(Icons.countertops),
                         label: Text('Countries'),
                       ),
@@ -180,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.storage),
                         label: Text('HiveStorage'),
                       ),
-                      NavigationRailDestination(  
+                      NavigationRailDestination(
                         icon: Icon(Icons.abc_sharp),
                         label: Text('RestApi'),
                       ),
@@ -334,13 +332,21 @@ class FavoritesPage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     if (appState.favorites.isEmpty) {
-      return Center(
-        child: Text('No favorites yet.'),
-      );
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text("Display favorites"),
+          ),
+          body: Center(
+            child: Text('No favorites yet.'),
+          ));
     }
 
-    return Material(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Display favorites"),
+      ),
+      body: Material(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -374,7 +380,7 @@ class FavoritesPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }

@@ -111,8 +111,7 @@ class _RestApiExample extends State<RestApiExample> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              FavoritesPage()),
+                                          builder: (context) => FavoritesPage()),
                                     );
                                   }
                                   // showForm(userData["key"]);
@@ -162,32 +161,5 @@ class _RestApiExample extends State<RestApiExample> {
       ), 
     ); 
   }
-
-  Widget _buildBody() {
-    return Stack(
-      children: <Widget>[
-        ListView.builder(
-          itemCount: 50,
-          itemBuilder: (context, index) {
-            return Container(
-              height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text('$index'),
-            );
-          },
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => {},
-              child: Text('FlatButton', style: TextStyle(fontSize: 24)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+ 
 }
