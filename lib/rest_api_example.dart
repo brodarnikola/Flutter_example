@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,9 @@ import 'package:flutter_example_1/main.dart';
 import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
+// very nice example of handling multiple async rest api calls
+  exampleMultipleAsyncCalls();
+
   final response = await http
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/2'));
 
@@ -17,6 +21,33 @@ Future<Album> fetchAlbum() async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
+  }
+}
+
+Future<int> delete() {
+  // Imagine that this function is more complex and slow.
+  return Future.delayed(const Duration(seconds: 2), () => 1);
+}
+
+Future<String> copy() => Future.delayed(const Duration(seconds: 2), () => "1");
+Future<bool> errorResult() =>
+    Future.delayed(const Duration(seconds: 2), () => true);
+
+void exampleMultipleAsyncCalls() async {
+  try {
+    // Wait for each future in a record, returns a record of futures:
+    (int, String, bool) result = await (delete(), copy(), errorResult()).wait;
+
+    // Do something with the results:
+    var deleteInt = result.$1;
+    var copyString = result.$2;
+    var errorBool = result.$3;
+  } on ParallelWaitError<(int?, String?, bool?),
+      (AsyncError?, AsyncError?, AsyncError?)> catch (e) {
+        print(e.values.$1);
+        print(e.errors.$2);
+        print(e.errors.$3);
+    // ...
   }
 }
 
@@ -88,7 +119,7 @@ class _RestApiExample extends State<RestApiExample> {
                 flex: 8,
                 child: ListView.builder(
                   itemCount: myHiveData.length,
-                  itemBuilder: (context, index) { 
+                  itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
                         title: //Show Name of user stored in data base
@@ -111,7 +142,8 @@ class _RestApiExample extends State<RestApiExample> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => FavoritesPage()),
+                                          builder: (context) =>
+                                              FavoritesPage()),
                                     );
                                   }
                                   // showForm(userData["key"]);
@@ -131,8 +163,8 @@ class _RestApiExample extends State<RestApiExample> {
                     if (snapshot.hasData) {
                       return Column(
                         children: [
-                            Text("Rest api example.. fetch data from network"),
-                            Text(snapshot.data!.title)   
+                          Text("Rest api example.. fetch data from network"),
+                          Text(snapshot.data!.title)
                         ],
                       );
                     } else if (snapshot.hasError) {
@@ -158,8 +190,7 @@ class _RestApiExample extends State<RestApiExample> {
             )
           ],
         ),
-      ), 
-    ); 
+      ),
+    );
   }
- 
 }
